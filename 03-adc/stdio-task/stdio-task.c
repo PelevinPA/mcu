@@ -7,32 +7,26 @@
 static char command[COMMAND_BUF_LEN] = {0};
 static int command_buf_idx;
 
-void stdio_task_init()
-{
+void stdio_task_init() {
     command_buf_idx = 0;
 }
 
-char* stdio_task_handle()
-{
+char* stdio_task_handle() {
     int symbol = getchar_timeout_us(0);
-    if (symbol == PICO_ERROR_TIMEOUT)
-    {
+    if (symbol == PICO_ERROR_TIMEOUT) {
         return NULL;
     }
 
-    putchar(symbol);
+    putchar(symbol);  // эхо
 
-    if (symbol == '\r' || symbol == '\n')
-    {
+    if (symbol == '\r' || symbol == '\n') {
         command[command_buf_idx] = '\0';
         command_buf_idx = 0;
-        
         printf("received string: '%s'\n", command);
         return command;
     }
 
-    if (command_buf_idx >= COMMAND_BUF_LEN - 1)
-    {
+    if (command_buf_idx >= COMMAND_BUF_LEN - 1) {
         command_buf_idx = 0;
         return NULL;
     }

@@ -2,8 +2,7 @@
 
 typedef void(*command_callback_t)(const char* args);
 
-typedef struct
-{
+typedef struct {
     const char* command_name;
     command_callback_t command_callback;
     const char* command_help;
